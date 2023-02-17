@@ -155,6 +155,8 @@ def lose():
 
     global _word
 
+    display()
+
     sys.stdout.buffer.write(f'\n\nYou failed to guess the word {_word} correctly!\n'.encode('utf8'))
     exit()
 
