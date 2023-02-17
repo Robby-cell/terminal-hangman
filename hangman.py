@@ -119,22 +119,16 @@ def checkGuess(): # ...
 
     indices = [i for i, e in enumerate(myWord) if guess == e]
 
-    #todo
-
+    if len(indices) == 0:
+        letterFail.append(guess)
+        letterTried.append(guess)
+        return
+        
+        
     for i in indices:
         toPrint = toPrint[:i] + guess + toPrint[i+1:]
 
-
-    if len(indices) == 0:
-        letterFail.append(guess)
-    
     letterTried.append(guess)
-
-
-#def goodGuess():
-#    #
-#    return
-
 
 
 def display():
@@ -172,13 +166,6 @@ def checkOver():
 
     if len(letterFail) >= 6:
         lose()
-
-    '''
-    for key in myWord:
-        if key != myWord[key]:
-            print(key)
-            return False
-    '''
 
     if not ('_' in toPrint):
         win()
