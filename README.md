@@ -5,3 +5,5 @@ usage is pretty self explanatory.
 
 may add words to the file and have the script
 pick a random word from there at some point.
+
+the module can be imported and used in other modules.
