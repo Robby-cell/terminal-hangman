@@ -7,129 +7,8 @@ from json import dumps
 import sys
 
 
-def startRandomGame(): #  starts a new game
-
-    gameInit()
-    _running = True
-
-    display()
-
-    while _running:
-        checkOver()
-        guessv()
-        checkGuess()
-        display()
-
-
-def gameInit():
-    
-    global failed 
-    failed = 0
-
-    global letters
-    letters = 'abcdefghijklmnopqrstuvwxyz'
-
-    global word
-    word = initializeWord()
-
-    global letterFail
-    letterFail = []
-
-    global letterTried
-    letterTried = []
-
-    global guess
-    guess = '0'
-
-    global _running
-    _running = False
-
-
-    global wordDict
-    wordDict = {}
-    for letter in word:
-        if letter != '_':
-            wordDict.update({letter: '_'})
-        else:
-            wordDict.update({letter: ' '})
-
-    ####
-    for key in wordDict:
-        if wordDict[key] != '_':
-            print(key)
-        else:
-            print('f')
-
-    print(dumps(wordDict))
-    ####
-    #todo
-    ####
-    guess = 'h'
-    try:
-        wordDict[guess]
-        print('good')
-
-    except KeyError as e:
-        print('bad')
-    ####
-
-
-    global HANGMANPICS 
-    HANGMANPICS = [f'''
-  +---+
-  |   |
-      |
-      |
-      |         {'failed tries:'} {letterFail}
-      |
-=========''', f'''
-  +---+
-  |   |
-  O   |
-      |
-      |         {'failed tries:'} {letterFail}
-      |
-=========''', f'''
-  +---+
-  |   |
-  O   |
-  |   |
-      |         {'failed tries:'} {letterFail}
-      |
-=========''', f'''
-  +---+
-  |   |
-  O   |
- /|   |
-      |         {'failed tries:'} {letterFail}
-      |
-=========''', f'''
-  +---+
-  |   |
-  O   |
- /|\  |
-      |         {'failed tries:'} {letterFail}
-      |
-=========''', f'''
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |         {'failed tries:'} {letterFail}
-      |
-=========''', f'''
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |         {'failed tries:'} {letterFail}
-      |
-=========''']
-    
-
-
 def initializeWord(): # initialize whats needed for the game to play out
-    
+
     # potentially add some bot that will grab a word from the dictionary or maybe make it multiplayer or a file containing words
 
     words = ('ant baboon badger bat bear beaver camel cat clam cobra cougar '
@@ -143,15 +22,87 @@ def initializeWord(): # initialize whats needed for the game to play out
     return choice(words)
 
 
-def guessv(): # take a guess
+_word = initializeWord()
+
+toPrint = '_'*len(_word)
     
-    sys.stdout.buffer.write('make a guess: '.encode('utf8'))
+letters = "abcdefghijklmnopqrstuvwxyz"
+    
+letterFail = []
+    
+letterTried = []
+    
+guess = ''
+    
+_running = False
+    
+myWord = [letter for letter in _word]
+
+    
+HANGMANPICS = ['''
+  +---+
+  |   |
+      |
+      |
+      |         
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |         
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |         
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |         
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |         
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |         
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |         
+      |
+=========''']
+
+
+def guessv(): # take a guess
+
+    global guess
+    global letterTried
+    
+    sys.stdout.buffer.write('make a guess: \n'.encode('utf8'))
     guess = input().lower()[0]
 
     if guess in letterTried:
         guessv()
 
-    elif not letters.find(guess):
+    elif not letters.find(guess) + 1:
         guessv()
 
     else:
@@ -159,38 +110,93 @@ def guessv(): # take a guess
 
 
 def checkGuess(): # ...
-    return
+
+    global guess
+    global letterTried
+    global letterFail
+    global toPrint
+    global myWord
+
+    indices = [i for i, e in enumerate(myWord) if guess == e]
+
+    #todo
+
+    for i in indices:
+        toPrint = toPrint[:i] + guess + toPrint[i+1:]
 
 
-def duplicateGuess():
-    return
-
-
-def goodGuess():
-    #
-    return
-
-
-def badGuess():
-    failed += 1
-    letterFail.append(guess)
+    if len(indices) == 0:
+        letterFail.append(guess)
+    
     letterTried.append(guess)
 
 
+#def goodGuess():
+#    #
+#    return
+
+
+
 def display():
-    sys.stdout.buffer.write(f"{HANGMANPICS[failed]}".encode('utf8'))
-    for key in wordDict:
-        sys.stdout.buffer.write(wordDict[key].encode('utf8'))
+
+    global letterFail
+    global toPrint
+    global HANGMANPICS
+
+    sys.stdout.buffer.write(f"{HANGMANPICS[len(letterFail)]}\n".encode('utf8'))
+    sys.stdout.buffer.write(f'{letterFail}\n'.encode('utf8'))
+
+    sys.stdout.buffer.write(f'{toPrint}\n'.encode('utf8'))
+
+
+def win():
+
+    global _word
+
+    sys.stdout.buffer.write(f'\n\nYou correctly guessed the word {_word}!\n'.encode('utf8'))
+    exit()
+
+
+def lose():
+
+    global _word
+
+    sys.stdout.buffer.write(f'\n\nYou failed to guess the word {_word} correctly!\n'.encode('utf8'))
+    exit()
 
 
 def checkOver():
 
-    for key in wordDict:
-        if key != wordDict[key]:
-            print(key)
-            return
+    global letterFail
+    global toPrint
 
-    _running = False
+    if len(letterFail) >= 6:
+        lose()
+
+    '''
+    for key in myWord:
+        if key != myWord[key]:
+            print(key)
+            return False
+    '''
+
+    if not ('_' in toPrint):
+        win()
+
+
+def startRandomGame(): #  starts a new game
+
+    global _running
+
+    _running = True
+
+    display()
+
+    while _running:
+
+        guessv()
+        checkOver()
+        display()
 
 
 if __name__ == '__main__':
