@@ -8,6 +8,8 @@ import sys
 
 
 def startRandomGame(): #  starts a new game
+
+    gameInit()
     _running = True
 
     display()
@@ -60,7 +62,8 @@ def gameInit():
 
     print(dumps(wordDict))
     ####
-
+    #todo
+    ####
     guess = 'h'
     try:
         wordDict[guess]
@@ -68,6 +71,7 @@ def gameInit():
 
     except KeyError as e:
         print('bad')
+    ####
 
 
     global HANGMANPICS 
@@ -125,6 +129,9 @@ def gameInit():
 
 
 def initializeWord(): # initialize whats needed for the game to play out
+    
+    # potentially add some bot that will grab a word from the dictionary or maybe make it multiplayer or a file containing words
+
     words = ('ant baboon badger bat bear beaver camel cat clam cobra cougar '
          'coyote crow deer dog donkey duck eagle ferret fox frog goat '
          'goose hawk lion lizard llama mole monkey moose mouse mule newt '
@@ -133,9 +140,7 @@ def initializeWord(): # initialize whats needed for the game to play out
          'stork swan tiger toad trout turkey turtle weasel whale wolf '
          'wombat zebra ').split()
 
-    word = choice(words)
-
-    return word
+    return choice(words)
 
 
 def guessv(): # take a guess
@@ -190,90 +195,4 @@ def checkOver():
 
 if __name__ == '__main__':
 
-    failed = 0
-    letters = 'abcdefghijklmnopqrstuvwxyz'
-    word = initializeWord()
-    letterFail = []
-    letterTried = []
-    guess = '0'
-    _running = False
-
-
-    wordDict = {}
-    for letter in word:
-        if letter != '_':
-            wordDict.update({letter: '_'})
-        else:
-            wordDict.update({letter: ' '})
-
-    ####
-    for key in wordDict:
-        if wordDict[key] != '_':
-            print(key)
-        else:
-            print('f')
-
-    print(dumps(wordDict))
-    ####
-
-    guess = 'h'
-    try:
-        wordDict[guess]
-        print('good')
-
-    except KeyError as e:
-        print('bad')
-
-
-    HANGMANPICS = [f'''
-  +---+
-  |   |
-      |
-      |
-      |         {'failed tries:'} {letterFail}
-      |
-=========''', f'''
-  +---+
-  |   |
-  O   |
-      |
-      |         {'failed tries:'} {letterFail}
-      |
-=========''', f'''
-  +---+
-  |   |
-  O   |
-  |   |
-      |         {'failed tries:'} {letterFail}
-      |
-=========''', f'''
-  +---+
-  |   |
-  O   |
- /|   |
-      |         {'failed tries:'} {letterFail}
-      |
-=========''', f'''
-  +---+
-  |   |
-  O   |
- /|\  |
-      |         {'failed tries:'} {letterFail}
-      |
-=========''', f'''
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |         {'failed tries:'} {letterFail}
-      |
-=========''', f'''
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |         {'failed tries:'} {letterFail}
-      |
-=========''']
-    
     startRandomGame()
