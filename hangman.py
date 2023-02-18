@@ -103,6 +103,8 @@ def display():
 def win():
 
     global _word
+    
+    display()
 
     display()
 
