@@ -138,7 +138,7 @@ def display():
     global HANGMANPICS
 
     sys.stdout.buffer.write(f"{HANGMANPICS[len(letterFail)]}\n".encode('utf8'))
-    sys.stdout.buffer.write(f'{letterFail}\n'.encode('utf8'))
+    sys.stdout.buffer.write(f'Failed letters: {[letter for letter in letterFail]}\n'.encode('utf8'))
 
     sys.stdout.buffer.write(f'{toPrint}\n'.encode('utf8'))
 
@@ -179,13 +179,11 @@ def startRandomGame(): #  starts a new game
 
     _running = True
 
-    display()
-
     while _running:
-
-        guessv()
-        checkOver()
+        
         display()
+        checkOver()
+        guessv()
 
 
 if __name__ == '__main__':
