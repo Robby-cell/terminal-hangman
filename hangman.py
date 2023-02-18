@@ -104,6 +104,8 @@ def win():
 
     global _word
 
+    display()
+
     sys.stdout.buffer.write(f'\n\nYou correctly guessed the word {_word}!\n'.encode('utf8'))
     exit()
 
