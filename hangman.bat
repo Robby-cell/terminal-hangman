@@ -1,2 +1,2 @@
 @echo off
-python hangman.py
+py hangman.py %*

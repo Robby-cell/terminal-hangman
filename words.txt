@@ -1,3 +1,37 @@
-bank
-hello
-thing
+
+Arborvitae Thuja occidentalis
+Black Ash Fraxinus nigra
+White Ash
+Fraxinus americana     
+Bigtooth Aspen
+Populus grandidentata Quaking Aspen Populus tremuloides
+Basswood
+Tilia americana
+American Beech Fagus grandifolia
+Black Birch
+Betula lenta Gray Birch
+Betula populifolia
+Paper Birch
+Betula papyrifera 
+Yellow Birch
+Betula alleghaniensis Butternut
+Juglans cinerea Black Cherry Prunus serotina
+Pin Cherry
+Prunus pensylvanica
+American Chestnut Castanea dentata
+Eastern Cottonwood
+Populus deltoides
+Cucumber Tree Magnolia acuminata American Elm
+Ulmus americana Slippery Elm
+Ulmus rubra
+Balsam Fir Abies balsamea 
+Hawthorn Crataegus Eastern Hemlock
+Tsuga canadensis Bitternut Hickory
+Carya cordiformis
+Pignut Hickory Carya glabra Shagbark Hickory
+Carya ovata
+American Hophornbeam Ostrya virginiana
+American Hornbeam
+Carpinus caroliniana American Larch
+Larix laricina Black Locust
+Robinia pseudoacacia Honey-Locust Gleditsia triacanthos

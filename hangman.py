@@ -4,19 +4,29 @@
 
 from random import choice
 import sys
+import os
 
 
 def initializeWord(): # initialize whats needed for the game to play out
 
     # potentially add some bot that will grab a word from the dictionary or maybe make it multiplayer or a file containing words
-
     words = ('ant baboon badger bat bear beaver camel cat clam cobra cougar '
-         'coyote crow deer dog donkey duck eagle ferret fox frog goat '
-         'goose hawk lion lizard llama mole monkey moose mouse mule newt '
-         'otter owl panda parrot pigeon python rabbit ram rat raven '
-         'rhino salmon seal shark sheep skunk sloth snake spider '
-         'stork swan tiger toad trout turkey turtle weasel whale wolf '
-         'wombat zebra ').split()
+     'coyote crow deer dog donkey duck eagle ferret fox frog goat '
+     'goose hawk lion lizard llama mole monkey moose mouse mule newt '
+     'otter owl panda parrot pigeon python rabbit ram rat raven '
+     'rhino salmon seal shark sheep skunk sloth snake spider '
+     'stork swan tiger toad trout turkey turtle weasel whale wolf '
+     'wombat zebra ').split()
+    try:
+        with open(sys.argv[1]) as file:
+            words = []
+            wordtemp = list(file.readlines())
+            for line in wordtemp:
+                wordarr = line.strip('\n').split()
+                for word in wordarr:
+                    words.append(word.lower())
+    except:
+        pass
 
     return choice(words)
 
@@ -54,13 +64,20 @@ def guessv(): # take a guess
     global letterTried
     
     sys.stdout.buffer.write('make a guess: \n'.encode('utf8'))
-    guess = input().lower()[0]
+    
+    try:
+        guess = input().lower()[0]
+    except:
+        guessv()
+        return
 
     if guess in letterTried:
         guessv()
+        return
 
     elif not letters.find(guess) + 1:
         guessv()
+        return
 
     else:
         checkGuess()
@@ -94,6 +111,7 @@ def display():
     global toPrint
     global HANGMANPICS
 
+    os.system("cls" if os.name == "nt" else "clear")
     sys.stdout.buffer.write(f"{HANGMANPICS[len(letterFail)]}\n".encode('utf8'))
     sys.stdout.buffer.write(f'Failed letters: {[letter for letter in letterFail]}\n'.encode('utf8'))
 
@@ -104,8 +122,6 @@ def win():
 
     global _word
     
-    display()
-
     display()
 
     sys.stdout.buffer.write(f'\n\nYou correctly guessed the word {_word}!\n'.encode('utf8'))
